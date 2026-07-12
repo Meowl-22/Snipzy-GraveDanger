@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"v_option_frog",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":1,
+  "compression":2,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":3.2932708,
+  "exportDir":"",
+  "name":"v_option_frog",
+  "parent":{
+    "name":"Voice",
+    "path":"folders/Sounds/Voice.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":48000,
+  "soundFile":"v_option_frog.wav",
+  "volume":1.0,
+}

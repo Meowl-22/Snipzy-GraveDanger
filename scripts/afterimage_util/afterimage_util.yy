@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"afterimage_util",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"afterimage_util",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

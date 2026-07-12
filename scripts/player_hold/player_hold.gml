@@ -1,0 +1,78 @@
+function player_hold()
+{
+	if dir != xscale
+	{
+		movespeed = 2
+		dir = xscale
+	}
+	
+	if (P_MOVE != 0)
+	{
+		if (movespeed < 8)
+			movespeed += 0.5
+		else if (floor(movespeed) == 8)
+			movespeed = 6
+		xscale = P_MOVE
+	}
+	else
+		movespeed = 0
+		
+	if (movespeed > 6)
+		movespeed -= 0.1
+	
+	if (sprite_index != spr_player_swingding)
+		hsp = P_MOVE * movespeed
+	else
+		hsp = xscale * movespeed
+	
+	if grounded
+	{
+		if (sprite_index == spr_player_haulingjump || sprite_index == spr_player_haulingfall)
+			reset_anim(spr_player_haulingland)
+		if (sprite_index != spr_player_haulingland && sprite_index != spr_player_haulingrise)
+			sprite_index = P_MOVE != 0 ? spr_player_haulingmove : spr_player_haulingidle
+	}
+	else
+	{
+		if (sprite_index != spr_player_haulingjump && sprite_index != spr_player_haulingfall)
+			reset_anim(spr_player_haulingjump)
+		if (!jumpstop && !input_check(INPUTS.jump) && vsp < 0)
+		{
+			jumpstop = true
+			vsp /= 10
+		}
+	}
+	
+	if (coyote_time && input_buffers.jump > 0)
+	{
+		input_buffers.jump = 0
+		vsp = -12
+		jumpstop = false
+		scr_sound_3d(sfx_jump, x, y)
+	}
+		
+	if P_MOVE != 0
+		xscale = P_MOVE
+	
+	image_speed = 0.35
+	switch (sprite_index)
+	{
+		case spr_player_haulingland:
+		case spr_player_haulingrise:
+			reset_anim_on_end(spr_player_haulingidle)
+			break;
+		case spr_player_haulingjump:
+			reset_anim_on_end(spr_player_haulingfall)
+			break;
+	}
+	
+	if input_buffers.grab > 0
+	{
+		input_buffers.grab = 0
+		state = states.punchenemy
+		var str = $"spr_player_finishingblow{string(irandom_range(1, 5))}"
+		reset_anim(asset_get_index(str))
+		if (input_direction_check(INPUTS.up))
+			reset_anim(spr_player_uppercutfinishingblow)
+	}
+}
