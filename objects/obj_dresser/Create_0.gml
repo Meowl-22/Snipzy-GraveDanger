@@ -9,8 +9,8 @@ make_clothes_inst = function(_name, _desc, _pal_ix, _pattern = noone) constructo
 clothes_arr = [	
 	new make_clothes_inst("Classic Cook",		"The one and only.",											1),
 	new make_clothes_inst("Unfunny Cook",		"Ha.",															3),	
-	new make_clothes_inst("Money Green",		"Green, like money!",											4),	
-	new make_clothes_inst("SAGE Blue",			"Nostalgia bait.",												5),	
+	new make_clothes_inst("Dango Green",		"Let's go Volta! -Dango 2037",											4),	
+	new make_clothes_inst("dark Blue",			"evil snipzy.",												5),	
 	new make_clothes_inst("Blood Red",			"Don't worry, it's just stained in pizza sauce.",				6),	
 	new make_clothes_inst("TV Purple",			"You are purple perfection.",									7),	
 	new make_clothes_inst("Dark Cook",			"For masochists.",												8),	

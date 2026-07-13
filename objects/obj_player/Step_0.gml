@@ -1,184 +1,197 @@
-if !pausestopframe
-{	
-	input_buffers.grab = max(input_buffers.grab - 1, 0)
-	input_buffers.jump = max(input_buffers.jump - 1, 0)
-
-	if input_check_pressed(INPUTS.grab)
-		input_buffers.grab = 15
-	
-	if input_check_pressed(INPUTS.jump)
-		input_buffers.jump = 15
-}
-else
-	pausestopframe = false
-	
-struct_foreach(aftimg_timers, function(_name, _data)
+try 
 {
-	_data.do_it = false
-})
+	if !pausestopframe
+	{	
+		input_buffers.grab = max(input_buffers.grab - 1, 0)
+		input_buffers.jump = max(input_buffers.jump - 1, 0)
 
-if grounded
-	coyote_time = 10
-else if vsp < 0
-	coyote_time = 0
-
-instakill = false
-intransfo = false
-
-prevstate = state
-
-if warping
-	exit;
-
-if hitstun < 0
-    player_states[state](); // execute state code
-else if hitstun >= 0
-{
-	hitstun--
-	image_speed = 0
-	if hitstun == -1
-		image_speed = prev_image_speed
-}
-
-if (state != states.normal)
-{
-	breakdance_secret.buffer = 0
-	breakdance_secret.spd = 0.25
-	idletimer = 180
-}
-
-var _windincrease = array_contains([states.mach2, states.mach3, states.climbwall], state)
-
-if state == states.normal
-	_windincrease = -1
-
-winding = clamp(winding + _windincrease, 0, 2000)
-
-if coyote_time > 0
-	coyote_time--
-
-if flash > 0
-	flash--
-
-if (state != states.jump && state != states.taunt)
-	fallingtimer = 0
-
-if (idletimer > 0 && state == states.normal)
-	idletimer--
-
-if (i_frames > 0 && state != states.hurt)
-{
-	i_frames--
-	if (alarm[5] = -1 || alarm[5] = 0) && (alarm[6] = 0 || alarm[6] = -1)
-		alarm[5] = 3;
-}
-else if i_frames <= 0
-	image_alpha = 1
-var sjumpprep = (state == states.superjump && sprite_index != spr_player_superjump && sprite_index != spr_player_presentboxspring && sprite_index != spr_player_Sjumpcancelstart)
-if (state == states.tumble || state == states.ball || state == states.crouch || sjumpprep)
-	mask_index = mask_player_small
-else
-	mask_index = mask_player
-
-grav = 0.5
-if state == states.ladder
-	grav = 0
-
-if (y > room_height + 300 || y < -800) && state != states.actor && state != states.backtohub
-{
-	shake_camera()
-	instance_create(0, 0, obj_technicaldifficulty)
-	state = states.actor
-	hsp = 0
-	vsp = 0
-	sprite_index = spr_player_idle
-}
-
-if intransfo || state == states.fireass
-	instance_destroy(instance_place(x + hsp, y + vsp, obj_ratblock))
-
-if state == states.ball
-	instance_destroy(instance_place(x + hsp, y + vsp, obj_rattumbleblock))
-
-if state != states.taunt
-	tauntinv = false
-
-if prev_transfo != intransfo //to cancel this sound, just make prev_transfo the transfo youre changed to.
-{
-	scr_sound_3d(intransfo ? sfx_transfo : sfx_outtransfo, x, y)
-	prev_transfo = intransfo
-}
-
-var prevhsp = hsp
-var prevvsp = vsp
-
-if hitstun >= 0
-{
-	hsp = 0
-	vsp = 0
-}
-
-if (state != states.noclip && state != states.backtohub)
-	collide()
-	
-if hitstun >= 0
-{
-	hsp = prevhsp
-	vsp = prevvsp
-}
-
-break_destroyables()
-
-struct_foreach(aftimg_timers, function(_name, _data)
-{
-	if (_data.timer > 0)
-		_data.timer--
-	else if _data.do_it
+		if input_check_pressed(INPUTS.grab)
+			input_buffers.grab = 15
+		
+		if input_check_pressed(INPUTS.jump)
+			input_buffers.jump = 15
+	}
+	else
+		pausestopframe = false
+		
+	struct_foreach(aftimg_timers, function(_name, _data)
 	{
-		if _data.effect == after_images.blur
+		_data.do_it = false
+	})
+
+	if grounded
+		coyote_time = 10
+	else if vsp < 0
+		coyote_time = 0
+
+	instakill = false
+	intransfo = false
+
+	prevstate = state
+
+	if warping
+		exit;
+
+	if hitstun < 0
+		player_states[state](); // execute state code
+	else if hitstun >= 0
+	{
+		hitstun--
+		image_speed = 0
+		if hitstun == -1
+			image_speed = prev_image_speed
+	}
+
+	if (state != states.normal)
+	{
+		breakdance_secret.buffer = 0
+		breakdance_secret.spd = 0.25
+		idletimer = 180
+	}
+
+	var _windincrease = array_contains([states.mach2, states.mach3, states.climbwall], state)
+
+	if state == states.normal
+		_windincrease = -1
+
+	winding = clamp(winding + _windincrease, 0, 2000)
+
+	if coyote_time > 0
+		coyote_time--
+
+	if flash > 0
+		flash--
+
+	if (state != states.jump && state != states.taunt)
+		fallingtimer = 0
+
+	if (idletimer > 0 && state == states.normal)
+		idletimer--
+
+	if (i_frames > 0 && state != states.hurt)
+	{
+		i_frames--
+		if (alarm[5] = -1 || alarm[5] = 0) && (alarm[6] = 0 || alarm[6] = -1)
+			alarm[5] = 3;
+	}
+	else if i_frames <= 0
+		image_alpha = 1
+		
+	var sjumpprep = (state == states.superjump && sprite_index != spr_player_superjump && sprite_index != spr_player_presentboxspring && sprite_index != spr_player_Sjumpcancelstart)
+	if (state == states.tumble || state == states.ball || state == states.crouch || sjumpprep)
+		mask_index = mask_player_small
+	else
+		mask_index = mask_player
+
+	grav = 0.5
+	if state == states.ladder
+		grav = 0
+
+	if (y > room_height + 300 || y < -800) && state != states.actor && state != states.backtohub
+	{
+		shake_camera()
+		instance_create(0, 0, obj_technicaldifficulty)
+		state = states.actor
+		hsp = 0
+		vsp = 0
+		sprite_index = spr_player_idle
+	}
+
+	if intransfo || state == states.fireass
+		instance_destroy(instance_place(x + hsp, y + vsp, obj_ratblock))
+
+	if state == states.ball
+		instance_destroy(instance_place(x + hsp, y + vsp, obj_rattumbleblock))
+
+	if state != states.taunt
+		tauntinv = false
+
+	if prev_transfo != intransfo 
+	{
+		scr_sound_3d(intransfo ? sfx_transfo : sfx_outtransfo, x, y)
+		prev_transfo = intransfo
+	}
+
+	var prevhsp = hsp
+	var prevvsp = vsp
+
+	if hitstun >= 0
+	{
+		hsp = 0
+		vsp = 0
+	}
+
+	if (state != states.noclip && state != states.backtohub)
+		collide()
+		
+	if hitstun >= 0
+	{
+		hsp = prevhsp
+		vsp = prevvsp
+	}
+
+	break_destroyables()
+
+	struct_foreach(aftimg_timers, function(_name, _data)
+	{
+		if (_data.timer > 0)
+			_data.timer--
+		else if _data.do_it
 		{
-			with afterimage_create(_data.effect)
-				player_sprite = true
+			if _data.effect == after_images.blur
+			{
+				with afterimage_create(_data.effect)
+					player_sprite = true
+			}
+			else
+				afterimage_create(_data.effect)
+			_data.timer = _data.resetpoint
 		}
-		else
-			afterimage_create(_data.effect)
-		_data.timer = _data.resetpoint
-	}
-})
+	})
 
-if ladderbuffer > 0
-	ladderbuffer--
+	if ladderbuffer > 0
+		ladderbuffer--
 
-visual_size = approach(visual_size, secret_cutscene ? 0 : 1, 0.05)
+	visual_size = approach(visual_size, secret_cutscene ? 0 : 1, 0.05)
 
-if supertauntcount >= 10
-{
-	supertauntcount = 10
-	if !supertauntshow
+	if supertauntcount >= 10
 	{
-		scr_sound(sfx_supertauntnotif)
-		supertauntshow = true
+		supertauntcount = 10
+		if !supertauntshow
+		{
+			scr_sound(sfx_supertauntnotif)
+			supertauntshow = true
+		}
+		
+		if supertauntbuffer > 0
+			supertauntbuffer--;
+		else if (state == states.normal || state == states.jump || state == states.mach2 || state == states.mach3)
+		{
+			supertauntbuffer = 4;
+			create_effect(x + irandom_range(-25, 25), y + irandom_range(-10, 35), asset_get_index($"spr_supertauntspark{irandom_range(1, 5)}")).depth = -150	
+		}
 	}
-	
-	if supertauntbuffer > 0
-		supertauntbuffer--;
-	else if (state == states.normal || state == states.jump || state == states.mach2 || state == states.mach3)
-	{
-		supertauntbuffer = 4;
-		create_effect(x + irandom_range(-25, 25), y + irandom_range(-10, 35), asset_get_index($"spr_supertauntspark{irandom_range(1, 5)}")).depth = -150	
-	}
+
+	uparrow.visible = state == states.normal &&
+		(place_meeting(x, y, obj_dresser) ||
+		(scr_can_enter_door(state) &&
+		(place_meeting(x, y, obj_startgate) ||
+		(place_meeting(x, y, obj_exitgate) && global.panic.active) ||
+		place_meeting(x, y, obj_door))))
+
+	player_sounds()
+
+	if (state == states.mach3 || state == states.mach2 || state == states.tumble)
+		railmovespeed = approach(railmovespeed, 0, 0.1);
+	else
+		railmovespeed = approach(railmovespeed, 0, 0.5);
 }
-
-uparrow.visible = state == states.normal &&
-	(place_meeting(x, y, obj_dresser) ||
-	(scr_can_enter_door(state) &&
-	(place_meeting(x, y, obj_startgate) ||
-	(place_meeting(x, y, obj_exitgate) && global.panic.active) ||
-	place_meeting(x, y, obj_door))))
-
-player_sounds()
-
-if (state == states.mach3 || state == states.mach2 || state == states.tumble)
-	railmovespeed = approach(railmovespeed, 0, 0.1);
-else
-	railmovespeed = approach(railmovespeed, 0, 0.5);
+catch (error) 
+{
+	// Log the crash data explicitly to our global text string variable
+	global.crash_log = "ERROR:\n" + string(error.message) + "\n\nSTACKTRACE:\n" + string(error.stacktrace);
+	
+	// Reset the state tracking and instantly switch to your custom crash handler room
+	state = states.normal; 
+	room_goto(CrashRoom); // Double check that 'CrashRoom' matches your target room name exactly!
+}
