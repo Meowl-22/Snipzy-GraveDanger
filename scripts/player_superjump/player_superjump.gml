@@ -18,7 +18,7 @@ function player_superjump()
 		image_speed = 0.5
 		vsp = 0
 		if (P_MOVE != 0)
-		  xscale = P_MOVE
+			xscale = P_MOVE
 	}
 	
 	var superjumpholding = SJUMPHELD || !grounded || !scr_can_uncrouch()
@@ -77,7 +77,16 @@ function player_superjump()
 			}
 			create_effect(x, y, spr_cloudeffect)
 		}
-		movespeed = 0
+		
+		// --- MODIFIED CODE STARTS HERE ---
+		// Allow horizontal movement during the superjump
+		movespeed = 8; // Change this number to make the mid-air steering faster or slower
+		hsp = P_MOVE * movespeed; 
+		
+		// Ensure the player faces the direction they are moving
+		if (P_MOVE != 0)
+			xscale = P_MOVE;
+		// --- MODIFIED CODE ENDS HERE ---
 		
 		if scr_solid(x, y - 1)
 		{

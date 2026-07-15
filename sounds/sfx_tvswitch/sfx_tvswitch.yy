@@ -10,7 +10,7 @@
   "compression":2,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":2.160431,
+  "duration":2.1604166,
   "exportDir":"",
   "name":"sfx_tvswitch",
   "parent":{

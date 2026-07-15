@@ -1,6 +1,12 @@
 function player_groundpound()
 {
-	if vsp >= 2
+	// --- MODIFIED CODE STARTS HERE ---
+	// If the player is in the startup animation, make them slowly go up
+	if (sprite_index == spr_player_bodyslamstart)
+	{
+		vsp = -3 // Adjust this number to make them rise faster (e.g. -4) or slower (e.g. -1.5)
+	}
+	else if vsp >= 2 // Standard gravity logic only applies when NOT in the startup animation
 	{
 		if vsp > 17
 		{
@@ -27,6 +33,7 @@ function player_groundpound()
 		}
 		vsp += 0.5
 	}
+	// --- MODIFIED CODE ENDS HERE ---
 	
 	if particle_timer2 > 0
 		particle_timer2--

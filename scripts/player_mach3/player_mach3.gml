@@ -67,8 +67,11 @@ function player_mach3()
 			scr_sound_3d_on(myemitter, sfx_machslideboost)
 		}
 		
-		if (movespeed < 20 && P_MOVE == xscale)
+		// --- MODIFIED CODE STARTS HERE ---
+		// Removed the 'movespeed < 20' cap so speed builds infinitely
+		if (P_MOVE == xscale)
 			movespeed += mach4mode ? 0.1 : 0.025
+		// --- MODIFIED CODE ENDS HERE ---
 			
 		if (SJUMPHELD && !dashpad && vsp >= 0)
 		{
