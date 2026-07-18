@@ -10,7 +10,7 @@
   "compression":2,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":1.4066666,
+  "duration":0.6273958,
   "exportDir":"",
   "name":"sfx_machslideboost",
   "parent":{
@@ -21,6 +21,6 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":48000,
-  "soundFile":"sfx_machslideboost.ogg",
-  "volume":0.5,
+  "soundFile":"sfx_machslideboost.wav",
+  "volume":1.0,
 }

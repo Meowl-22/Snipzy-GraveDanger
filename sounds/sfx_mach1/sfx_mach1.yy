@@ -10,7 +10,7 @@
   "compression":2,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":1.9333333,
+  "duration":1.2344375,
   "exportDir":"",
   "name":"sfx_mach1",
   "parent":{
@@ -21,6 +21,6 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":48000,
-  "soundFile":"sfx_mach1.ogg",
+  "soundFile":"sfx_mach1.wav",
   "volume":1.0,
 }
