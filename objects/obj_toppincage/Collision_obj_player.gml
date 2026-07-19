@@ -40,3 +40,15 @@ with instance_create(x, y, obj_collect_number)
 
 with obj_tv
 	tv_expression(spr_tv_collect)
+
+// Count how many toppins have been collected
+var _count = 0;
+var _t = global.level_data.toppins;
+if (_t.shroom) _count++;
+if (_t.cheese) _count++;
+if (_t.tomato) _count++;
+if (_t.sausage) _count++;
+if (_t.pineapple) _count++;
+
+// Display the text with the current count
+show_shaky_text("You found " + string(_count) + "/5 spookers! ");
