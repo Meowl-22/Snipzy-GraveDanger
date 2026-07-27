@@ -37,3 +37,7 @@ switch (state)
 bg_pos.x++
 bg_pos.y++
 wave_timer += 20
+if (global.panic.active) 
+{
+text = "...well i did not expect that...";
+}
